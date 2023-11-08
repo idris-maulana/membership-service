@@ -8,10 +8,8 @@ import com.idris.membership.payloads.request.UpdateProfileRequest;
 import com.idris.membership.payloads.response.ProfileResponse;
 import com.idris.membership.repository.ImageRepository;
 import com.idris.membership.repository.UserRepository;
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -65,7 +63,6 @@ public class ProfileService {
         return new CommonResponse(0, "Update Pofile berhasil", response);
     }
 
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Transactional
     public CommonResponse<?> updateImageProfile(String token, MultipartFile request) throws IOException {
         User user = jwtService.verifyToken(token);
@@ -75,10 +72,7 @@ public class ProfileService {
             return new CommonResponse<>(109, "Format Image tidak sesuai", null);
         }
 
-
-
         String raw = Base64.getEncoder().encodeToString(request.getBytes());
-
 
         Image image = new Image();
         image.setFilename(StringHelper.generateSandString(5) + "-" + new Date().getTime() + "." + ext);

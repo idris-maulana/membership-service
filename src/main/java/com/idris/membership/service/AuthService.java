@@ -40,9 +40,7 @@ public class AuthService {
     }
 
     @Transactional
-    @Lock(LockModeType.PESSIMISTIC_WRITE)
     public CommonResponse<?> registration(RegistrationRequest request) {
-
         Optional<User> optUser = userRepository.getUserByEmail(request.getEmail());
         if (optUser.isPresent()) {
             return new CommonResponse<>(100, "Email sudah terdaftar", null);
