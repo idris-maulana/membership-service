@@ -41,7 +41,7 @@ public class ProfileController {
     }
 
     @PutMapping(value = "/image", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public ResponseEntity<?> updateImageProfile(@RequestHeader("Authorization") String token, @RequestPart("figitle") MultipartFile request) {
+    public ResponseEntity<?> updateImageProfile(@RequestHeader("Authorization") String token, @RequestPart("file") MultipartFile request) {
         try {
             return ResponseEntity.ok(profileService.updateImageProfile(token, request));
         } catch (Exception ex) {

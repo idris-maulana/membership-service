@@ -57,7 +57,7 @@ public class AuthService {
         return new CommonResponse<>(0, "Registrasi berhasil silahkan login", null);
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public CommonResponse<?> login(LoginRequest request) {
         Optional<User> optUser = userRepository.getUserByEmail(request.getEmail());
         if (optUser.isPresent()) {
